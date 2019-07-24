@@ -23,19 +23,19 @@ class ListaReporteController extends Controller
         }else{
             $data=array();
             if($request->estatus != null){
-                $s = mb_convert_case($request->estatus, MB_CASE_UPPER, 'UTF-8');
-                $data['status']= $s;
+                $data['status']= $request->estatus;
             }
-            $data['observaciones']=$request->observaciones;
-            $data['periodoAtencion']=$request->periodoAtencion;
-     
+
+            $data['observaciones']=strtoupper($request->observaciones);
+            $data['periodoAtencion']=strtoupper($request->periodoAtencion);
+
             DB::table('tlv_1821_lr')->where('idlistaReportes',$idlistaReporte)->update($data);
             Alert::success('Reporte Actualizado', 'Reporte Actualizado Correctamente');
             return Redirect::to('/consultadeReportes');
         }
-       
+
     }
 
 
-    
+
 }

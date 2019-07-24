@@ -10,29 +10,22 @@
             <br> <br>
             <center>
                 <h1>CONSULTA</h1>
-                <form action="">
+                <form  autocomplete="off" action="{{url('consultadeReportes/busqueda')}}" method="POST">
+                    {{ csrf_field() }}
                     <div>
-                        <select class="boton_personalizado" style='width:120px; height:40px'>
+                        <select id="tipoReporte" name="tipoReporte" class="boton_personalizado" style='width:120px; height:40px'>
                             <option value="">Tipo</option>
-                            <option value="">ASP</option>
+                            @foreach($all_listaReporte_info as $listaReporte)
+                            <option value="{{$listaReporte->idlistaReportes}}">{{$listaReporte->nombre}}</option>
+                            @endforeach
                         </select>
-
-
-                        <select class="boton_personalizado" style='width:120px; height:40px'>
-                            <option value="">Usuario</option>
-                            <option value="">ASP</option>
-                        </select>
-
-                        <select class="boton_personalizado" style='width:120px; height:40px'>
-                            <option value="">Fecha</option>
-                            <option value="">ASP</option>
-                        </select>
-
-                        <select class="boton_personalizado" style='width:120px; height:40px'>
+                        <select name="estatus" class="boton_personalizado" style='width:120px; height:40px'>
                             <option value="">Estatus</option>
-                            <option value="">ASP</option>
+                            <option value="AC">AC (ACTIVO)</option>
+                            <option value="NA">NA (NO ACTIVO)</option>
                         </select>
-                        <br> <br>
+                        <br>
+                        <br>
                         <button class="boton-Personalizado" style='width:120px; height:40px' type="submit"></a><span
                                 class="mif-file-text mif-search "></span> Buscar</button></br>
 
@@ -57,7 +50,7 @@
                                 <TD bgcolor="#adabbc" width="150">FECHA</TD>
                                 <TD bgcolor="#adabbc" width="150">ESTATUS</TD>
                                 <TD bgcolor="#adabbc" width="150">EDITAR</TD>
-                               <!-- <TD bgcolor="#adabbc" width="150">ELIMINAR</TD>-->
+                                <!-- <TD bgcolor="#adabbc" width="150">ELIMINAR</TD>-->
                                 <!--	CONSULTA -->
 
 
@@ -79,10 +72,10 @@
                                         ?>
                                 </TD>
                                 <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150">
-                                {{$lista_reportes->fechaCreacion}}
+                                    {{$lista_reportes->fechaCreacion}}
                                 </TD>
                                 <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150">
-                                {{$lista_reportes->status}}
+                                    {{$lista_reportes->status}}
                                 </TD>
                                 <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150">
 
@@ -90,7 +83,7 @@
                                     <a href="{{url('editarListaReporte/'.$lista_reportes->idlistaReportes)}}"><span
                                             class="mif-file-text mif-2x "></span></a> </TD>
 
-                               <!-- <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150"><a
+                                <!-- <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150"><a
                                         href="../container/bd/proceso.php?fecha="><span
                                             class="mif-cross mif-2x "></span></a></TD>-->
 
@@ -99,6 +92,13 @@
                             @endforeach
                         </table>
 
+                    </div>
+                    <div>
+                            <form action="{{url('consultadeReporte/PdfTabla')}}" target="_blank"  method="post">
+                                <button class="boton-Personalizado" style='border:#ffffff; background-color:red; width:120px; height:40px' type="submit"></a><span class="mif-file-pdf "></span> PDF</button>
+                                {{ csrf_field() }}
+                                <br> <br>
+                        </form>
                     </div>
                 </center>
 

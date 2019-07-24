@@ -14,15 +14,16 @@ function activar() {
     document.getElementById("estatus").disabled = false;
     document.getElementById("descripcion").disabled = false;
     document.getElementById("adjunto").disabled = false;
+    document.getElementById("guardar").disabled = false;
 }
 </script>
     @foreach($infoTramites as $info)
-    <br><button><a href="{{URL::to('/consultaTramite')}}"><span class="mif-arrow-left mif-4x"></span></a></button> 
+    <br><button><a href="{{URL::to('/consultaTramite')}}"><span class="mif-arrow-left mif-4x"></span></a></button>
     <button onclick="activar()" style="Cursor:pointer"><a><span class="mif-pencil mif-4x"></span></a></button>
-    <form action="{{url('guardarEditadoTramite/'.$info->idtramites)}}" method = "POST">  
-    {{ csrf_field() }}                                
+    <form action="{{url('guardarEditadoTramite/'.$info->idtramites)}}" method = "POST">
+    {{ csrf_field() }}
                 <div id="formulario">
-                    
+
 
                         <div>
                               <h1 class="titulo">{{$info->nombre}}</h1>
@@ -61,11 +62,11 @@ function activar() {
                         <div>
                             <label for="status" class="form-Nombres">Estatus</label>
                             <select  disabled id="estatus" name="estatus" class="form-Menu">
-                                <?php 
-                                if($info->status == 'AC'){ 
+                                <?php
+                                if($info->status == 'AC'){
                                     echo "<option  disabled selected value = '$info->status'>AC (ACTIVO)</option>";
                                     echo "<option value = 'NA'>NA (NO ACTIVO)</option>";
-                                }else{ 
+                                }else{
                                     echo "<option disabled selected value = '$info->status'>NA (NO ACTIVO)</option>";
                                     echo "<option value = 'AC'>AC (ACTIVO)</option>";
                                 }
@@ -84,7 +85,7 @@ function activar() {
                         </div><br><br>
 
 
-                        <button type="submit" class="boton-Personalizado" name="guardar">Guardar</button>
+                        <button type="submit" class="boton-Personalizado" name="guardar" id="guardar" disabled>Guardar</button>
                         <button type="submit" class="boton-Cancelar" name="cancelar">Cancelar</button>
                 </div>
         </div>

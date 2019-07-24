@@ -22,15 +22,22 @@ class TramitesController extends Controller
             return Redirect::to('/consultaTramite');
         }else{
             $data = array();
-            $data['destinatario'] = $request->destinatario;
-            $data['tiempoRespuesta'] = $request->tiempoRespuesta;
-            $data['vigencia'] = $request->vigencia;
-            $data['requisitos'] = $request->requisitos;
-            $data['costo'] = $request->costo;
-            $data['fundamentosJuridicos'] = $request->fundamentosJuridicos;
-            $data['status'] = $request->estatus;
-            $data['descripcion'] = $request->descripcion;
-            $data['formato'] = $request->adjunto;
+
+            if(($request->destinatario != null) || ($request->tiempoRespuesta != null) || ($request->vigencia != null) ||
+            ($request->requisitos != null) || ($request->costo != null) || ($request->fundamentosJuridicos != null) ||
+            ($request->estatus != null) || ($request->descripcion != null) || ($request->adjunto != null)){
+                $data['destinatario'] = $request->destinatario;
+                $data['tiempoRespuesta'] = $request->tiempoRespuesta;
+                $data['vigencia'] = $request->vigencia;
+                $data['requisitos'] = $request->requisitos;
+                $data['costo'] = $request->costo;
+                $data['fundamentosJuridicos'] = $request->fundamentosJuridicos;
+                if($request->estatus != null){
+                    $data['status'] = $request->estatus;
+                }
+                $data['descripcion'] = $request->descripcion;
+                $data['formato'] = $request->adjunto;
+            }
 
             DB::table('tlv_1821_tr')->where('idtramites',$idtramites)->update($data);
             Alert::success('Tramite Actualizado', 'Tramite Actualizado Correctamente');
