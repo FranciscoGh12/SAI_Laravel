@@ -4,7 +4,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>Sistema Administrativo de Informacion</title>
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel=”icon” type=”image/png” href="{{asset('favicon.ico')}}" />
 	<link rel="stylesheet" href="{{asset('css/metro/css/metro-icons.css')}}" />
 	<link rel="stylesheet" href="{{asset('css/styleSAI.css')}}" />
 	<link rel="stylesheet" href="{{asset('css/estiloReporte.css')}}" type="text/css"/>

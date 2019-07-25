@@ -93,6 +93,7 @@
                         </table>
 
                     </div>
+                    <br> <br>
                     <div>
                             <form action="{{url('consultadeReporte/PdfTabla')}}" target="_blank"  method="post">
                                 <button class="boton-Personalizado" style='border:#ffffff; background-color:red; width:120px; height:40px' type="submit"></a><span class="mif-file-pdf "></span> PDF</button>

@@ -10,13 +10,15 @@ use TCPDF;
 
 class ConsultadeReportesController extends Controller
 {
+    protected $listado_reportes;
+
     public function index()
     {
-        $listado_reportes = DB::table('tlv_1821_lr')->where('status', 'AC')->get();
+        $this->listado_reportes = DB::table('tlv_1821_lr')->where('status', 'AC')->get();
         $all_listaReporte_info = DB::table('tlv_1821_lr')->get();
-        $this->downloadPDF($all_listaReporte_info);
+        $this->downloadPDF($this->listado_reportes);
         return view('consultadeReportes')
-            ->with('listado_reportes', $listado_reportes)
+            ->with('listado_reportes', $this->listado_reportes)
             ->with('all_listaReporte_info', $all_listaReporte_info);
     }
 
@@ -26,14 +28,14 @@ class ConsultadeReportesController extends Controller
         $search_tipoReporte = $request->get('tipoReporte');
         $search_status = $request->get('estatus');
 
-        $listado_reportes = ConsultaTipoReportes::orderBy('fechaCreacion', 'desc')
+        $this->listado_reportes = ConsultaTipoReportes::orderBy('fechaCreacion', 'desc')
             ->tipo($search_tipoReporte)
             ->estatus($search_status)
             ->get();
-        $this->downloadPDF($listado_reportes);
+        $this->downloadPDF($this->listado_reportes);
         return view('consultadeReportes')
         ->with('all_listaReporte_info', $all_listaReporte_info)
-        ->with('listado_reportes',$listado_reportes);
+        ->with('listado_reportes',$this->listado_reportes);
     }
     public function vistaPDF()
     {
@@ -49,8 +51,8 @@ class ConsultadeReportesController extends Controller
 
     public function downloadPDF($listado_reportes)
     {
-        $all_listaReporte_info_pdf = DB::table('tlv_1821_lr')->get();
-        $listado_reportes = DB::table('tlv_1821_lr')->get();
+        $all_listaReporte_info_pdf = $this->listado_reportes;
+        //$this->listado_reportes = $listado_reportes ;
 
         $pdf = new MyPDF('L', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->SetCreator(PDF_CREATOR);

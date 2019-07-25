@@ -7,6 +7,7 @@
     <meta name="description " content="Registro de usuarios">
     <meta name="keywords" content="HTML, CSS, JS, PHP, MySql">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel=”icon” type=”image/png” href="{{asset('favicon.ico')}}" />
     <link rel="stylesheet" href="{{asset('css/styleLogin.css')}}" />
 </head>
 <body>
