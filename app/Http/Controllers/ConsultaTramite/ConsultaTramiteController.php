@@ -17,4 +17,9 @@ class ConsultaTramiteController extends Controller
         ->with('tipo_de_tramite_info', $tipo_de_tramite_info)
         ->with('all_area_info', $all_area_info);
     }
+
+    public function filtrado_tramites(Request $request)
+    {
+        # code...
+    }
 }

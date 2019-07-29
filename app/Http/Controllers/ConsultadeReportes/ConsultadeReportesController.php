@@ -52,7 +52,6 @@ class ConsultadeReportesController extends Controller
     public function downloadPDF($listado_reportes)
     {
         $all_listaReporte_info_pdf = $this->listado_reportes;
-        //$this->listado_reportes = $listado_reportes ;
 
         $pdf = new MyPDF('L', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->SetCreator(PDF_CREATOR);
