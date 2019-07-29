@@ -31,6 +31,7 @@ Route::post('guardarEditadoListaReporte/{idlistaReporte}','ListaReporte\ListaRep
 Route::get('verMasTramites/{idtramites}','Tramites\TramitesController@index');
 Route::get('actualizarPersonal/{correoInstitucional}','Personal\PersonalController@index');
 Route::post('altausuario/registro','AltaUsuario\AltaUsuarioController@AltaUsuario');
+Route::post('consultaTramite/busqueda', 'ConsultaTramite\ConsultaTramiteController@filtrado_tramites');
 Route::post('consultaReporte/busqueda','ConsultaReporte\ConsultaReporteController@filtrado_reporte');
 Route::post('consultadeReportes/busqueda','ConsultadeReportes\ConsultadeReportesController@filtrado_tipo_reporte');
 Route::post('consultaReporte/fetch','ConsultaReporte\ConsultaReporteController@fetch');

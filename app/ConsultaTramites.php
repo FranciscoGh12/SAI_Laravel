@@ -8,7 +8,7 @@ class ConsultaTramites extends Model
 {
     protected $table= 'tlv_1821_tr';
 
-    protected $fillable = ['idarea','status','idtipoTramite'];
+    protected $fillable = ['idarea','status','idtipoTramite','ultimaActualizacion'];
 
     public function scopeTipo($query, $tipoTramite)
     {

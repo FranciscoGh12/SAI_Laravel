@@ -11,26 +11,23 @@
             <center>
                 <h1>CONSULTA</h1>
 
-                <form action="">
-
+                <form action="{{url('consultaTramite/busqueda')}}" method="POST">
+                {{ csrf_field() }}
                     <div>
-                        <select class="boton_personalizado" style='width:120px; height:40px'>
+                        <select name="tipoTramite" class="boton_personalizado" style='width:120px; height:40px'>
                             <option value="">Tipo</option>
                             @foreach ($tipo_de_tramite_info as $tipo_de_tramite)
                         <option value="{{$tipo_de_tramite->idtipoTramite}}">{{$tipo_de_tramite->categoria}}</option>
                             @endforeach
                         </select>
 
-
-
-
-                        <select class="boton_personalizado" style='width:120px; height:40px'>
+                        <select name="estatus" class="boton_personalizado" style='width:120px; height:40px'>
                             <option value="">Estatus</option>
                             <option value="AC">Activo (AC)</option>
                             <option value="NA">No Activo (NA)</option>
                         </select>
 
-                        <select class="boton_personalizado" style='width:120px; height:40px'>
+                        <select name="area" class="boton_personalizado" style='width:120px; height:40px'>
                             <option value="">Area</option>
                             @foreach($all_area_info as $area)
                             <option value="{{$area->idarea}}">{{$area->nombre}}</option>
