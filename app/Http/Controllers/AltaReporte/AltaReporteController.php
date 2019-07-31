@@ -60,10 +60,10 @@ class AltaReporteController extends Controller
         $data_reporte['idlistaReportes']=$data_idarea;
         $data_reporte['idarea']=$user_area;
         $data_reporte['correoInstitucional']=$email;
-        $data_reporte['nombre']=$request->nombre;
-        $data_reporte['status']=$request->estatus;
-        $data_reporte['observaciones']=$request->observaciones;
-        $data_reporte['periodoAtencion']=$request->periodoAtencion;
+        $data_reporte['nombre']=strtoupper($request->nombre);
+        $data_reporte['status']= "AC";
+        $data_reporte['observaciones']=strtoupper($request->observaciones);
+        $data_reporte['periodoAtencion']=strtoupper($request->periodoAtencion);
         $data_reporte['formato']=$request->adjunto;
         DB::table('tlv_1821_lr')->insert($data_reporte);
         Alert::success('Reporte Agregado', 'Reporte Agregado Correctamente');

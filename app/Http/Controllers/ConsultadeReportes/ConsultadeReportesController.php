@@ -15,7 +15,7 @@ class ConsultadeReportesController extends Controller
     public function index()
     {
         $this->listado_reportes = DB::table('tlv_1821_lr')->where('status', 'AC')->get();
-        $all_listaReporte_info = DB::table('tlv_1821_lr')->get();
+        $all_listaReporte_info = DB::table('tlv_1821_lr')->where('status', 'AC')->get();
         $this->downloadPDF($this->listado_reportes);
         return view('consultadeReportes')
             ->with('listado_reportes', $this->listado_reportes)
@@ -24,29 +24,33 @@ class ConsultadeReportesController extends Controller
 
     public function filtrado_tipo_reporte(Request $request)
     {
-        $all_listaReporte_info = DB::table('tlv_1821_lr')->get();
+
+        $all_listaReporte_info = DB::table('tlv_1821_lr')->where('status', 'AC')->get();
         $search_tipoReporte = $request->get('tipoReporte');
         $search_status = $request->get('estatus');
+        if ($search_status != "" || $search_tipoReporte !="") {
+            $this->listado_reportes = ConsultaTipoReportes::orderBy('fechaCreacion', 'desc')
+                ->tipo($search_tipoReporte)
+                ->estatus($search_status)
+                ->get();
+            $this->downloadPDF($this->listado_reportes);
+        } else {
+            $this->index();
+        }
 
-        $this->listado_reportes = ConsultaTipoReportes::orderBy('fechaCreacion', 'desc')
-            ->tipo($search_tipoReporte)
-            ->estatus($search_status)
-            ->get();
-        $this->downloadPDF($this->listado_reportes);
         return view('consultadeReportes')
-        ->with('all_listaReporte_info', $all_listaReporte_info)
-        ->with('listado_reportes',$this->listado_reportes);
+            ->with('all_listaReporte_info', $all_listaReporte_info)
+            ->with('listado_reportes', $this->listado_reportes);
     }
     public function vistaPDF()
     {
-        $url = $_SERVER['DOCUMENT_ROOT'].'/temp/tipo_reporte.pdf';
+        $url = $_SERVER['DOCUMENT_ROOT'] . '/temp/tipo_reporte.pdf';
         if (file_exists($url)) {
             return response()->file($url)->deleteFileAfterSend();
-        } else{
+        } else {
             $this->index();
             return response()->file($url)->deleteFileAfterSend();
         }
-
     }
 
     public function downloadPDF($listado_reportes)
@@ -68,7 +72,7 @@ class ConsultadeReportesController extends Controller
         $pdf->writeHTML($html_content, true, false, true, false, '');
         $pdf->lastPage();
 
-        $pdf->Output($_SERVER['DOCUMENT_ROOT'].'/temp/tipo_reporte.pdf', 'F');
+        $pdf->Output($_SERVER['DOCUMENT_ROOT'] . '/temp/tipo_reporte.pdf', 'F');
     }
 }
 

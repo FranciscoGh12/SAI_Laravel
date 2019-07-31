@@ -15,17 +15,6 @@
                                         <input type="text" class="form-Texto" id="nombre" name="nombre" required />
                                     </div>
 
-
-                                    <div>
-                                        <label for="estatus" class="form-Nombres">Estatus (*)</label>
-                                        <!-- <input type="combo" class="form-Texto" id="estatus" name="estatus" required/>-->
-                                        <select name="estatus" required class="form-Menu">
-                                            <option disabled selected value="0">Selecciona una opción</option>
-                                            <option value="AC">AC</option>
-                                            <option value="NA">NA</option>
-                                        </select>
-                                    </div>
-
                                     <div>
                                         <label for="obervaciones" class="form-Nombres">Observaciones</label>
                                         <textarea name="observaciones" class="form-Texto" rows="8" placeholder="Procure ser claro y preciso"></textarea>

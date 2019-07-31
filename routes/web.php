@@ -32,6 +32,7 @@ Route::get('verMasTramites/{idtramites}','Tramites\TramitesController@index');
 Route::get('actualizarPersonal/{correoInstitucional}','Personal\PersonalController@index');
 Route::post('altausuario/registro','AltaUsuario\AltaUsuarioController@AltaUsuario');
 Route::post('consultaTramite/busqueda', 'ConsultaTramite\ConsultaTramiteController@filtrado_tramites');
+Route::post('consultaPersonal/busqueda', 'ConsultaPersonal\ConsultaPersonalController@filtrado_personal');
 Route::post('consultaReporte/busqueda','ConsultaReporte\ConsultaReporteController@filtrado_reporte');
 Route::post('consultadeReportes/busqueda','ConsultadeReportes\ConsultadeReportesController@filtrado_tipo_reporte');
 Route::post('consultaReporte/fetch','ConsultaReporte\ConsultaReporteController@fetch');
@@ -39,6 +40,8 @@ Route::post('altareporte/registro','AltaReporte\AltaReporteController@AltaReport
 Route::post('altatramite/registro','AltaTramite\AltaTramiteController@AltaTramite');
 Route::post('consultaReporte/PdfTabla','ConsultaReporte\ConsultaReporteController@vistaPDF');
 Route::post('consultadeReporte/PdfTabla','ConsultadeReportes\ConsultadeReportesController@vistaPDF');
+Route::post('consultaPersonal/PdfTabla','ConsultaPersonal\ConsultaPersonalController@vistaPDF');
+Route::post('consultaTramite/PdfTabla','ConsultaTramite\ConsultaTramiteController@vistaPDF');
 Route::post('guardarEditadoTramite/{idtramites}','Tramites\TramitesController@guardarCambios');
 Route::post('guardarEditadoPersonal/{correoInstitucional}','Personal\PersonalController@guardarCambios');
 //Route::get('pdf_consulta_reportes','PDFController@index');

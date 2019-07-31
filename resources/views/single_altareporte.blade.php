@@ -22,7 +22,7 @@
                                         <select name="estatus" required class="form-Menu">
                                             <option disabled selected value="0">Selecciona una opción</option>
                                             <option value="1">AC</option>
-                                            <option value="2">NA</option>
+                                            <option value="2">NA</option>vvv
                                         </select>
                                     </div>
 

@@ -24,14 +24,14 @@ class PersonalController extends Controller
             return Redirect::to('/consultaPersonal');
         }else{
             $data = array();
-            if($request->password != null){
+            if($request->estatus != null){
+                $data['status'] = $request->estatus;
+            }else if($request->password != null){
                 $data['password'] = Crypt::encryptString($request->input('password'));
             }else if($request->rol != null){
                 $data['idRol'] = $request->rol;
             }else if($request->area != null){
                 $data['idarea'] = $request->area;
-            }else if($request->estatus != null){
-                $data['status'] = $request->estatus;
             }else if($request->telefono != null){
                 $data['telefono'] = $request->telefono;
             }

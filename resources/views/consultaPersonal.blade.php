@@ -10,27 +10,33 @@
             <center>
                 <h1>CONSULTA</h1>
 
-                <form action="">
+            <form autocomplete="off" action="{{url('consultaPersonal/busqueda')}}" method="POST">
+                {{ csrf_field() }}
                     <div>
-
-
-                        <select class="boton_personalizado" style='width:120px; height:40px'>
+                        <select name="estatus" class="boton_personalizado" style='width:120px; height:40px'>
                             <option value="">Estatus</option>
                             <option value="AC">Activo (AC)</option>
                             <option value="NA">No Activo (NA)</option>
                         </select>
 
-                        <select class="boton_personalizado" style='width:120px; height:40px'>
+                        <select name="areas" class="boton_personalizado" style='width:120px; height:40px'>
                             <option value="">Area</option>
                             @foreach($all_area_info as $area)
                             <option value="{{$area->idarea}}">{{$area->nombre}}</option>
                             @endforeach
                         </select>
-                        <br> <br>
-                        <button class="boton-Personalizado" style='width:120px; height:40px' type="submit"></a><span
-                                class="mif-file-text mif-search "></span> Buscar</button></br>
 
-
+                        <select name="roles" class="boton_personalizado" style="width:120px; height:40px" >
+                            <option value="">Rol</option>
+                            @foreach ($all_rol_info as $roles)
+                        <option value="{{$roles->idRol}}">{{$roles->nombre}}</option>
+                            @endforeach
+                        </select>
+                        <br><br>
+                        <input type="text" class="form-Texto2" id="search_nombre" name="search_nombre"
+                            placeholder="NOMBRE DE USUARIO" maxlength="135" />
+                        <br>
+                        <button class="boton-Personalizado" style='width:120px; height:40px' type="submit"></a><span class="mif-file-text mif-search "></span> Buscar</button></br>
                     </div>
                 </form>
                 <br>
@@ -57,7 +63,6 @@
                                     <TD bgcolor="#adabbc" width="150">ESTATUS</TD>
                                     <TD bgcolor="#adabbc" width="150">ROL</TD>
                                     <TD bgcolor="#adabbc" width="150">EDITAR</TD>
-                                    <TD bgcolor="#adabbc" width="150">ELIMINAR</TD>
                                     <!--	CONSULTA -->
 
 
@@ -98,15 +103,19 @@
                                             href="{{url('actualizarPersonal/'.$personal_info->correoInstitucional)}}"><span
                                                 class="mif-file-text mif-2x "></span></a> </TD>
 
-                                    <TD style="border-color:#666666; border-style:dashed; border-width:2px;"
-                                        width="150"><a href="../container/bd/procesoP.php?correoInstitucional="><span
-                                                class="mif-cross mif-2x "></span></a></TD>
-
 
                                 </tr>
 
                                 @endforeach
                             </table>
+                            <br><br>
+                            <div>
+                                <form action="{{url('consultaPersonal/PdfTabla')}}" target="_blank"  method="post">
+                                    <button class="boton-Personalizado" style='border:#ffffff; background-color:red; width:120px; height:40px' type="submit"></a><span class="mif-file-pdf "></span> PDF</button>
+                                    {{ csrf_field() }}
+                                    <br> <br>
+                                </form>
+                            </div>
 
                     </div>
                 </center>

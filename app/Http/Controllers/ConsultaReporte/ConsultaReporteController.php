@@ -40,8 +40,8 @@ class ConsultaReporteController extends Controller
         $all_area_info = DB::table('tlv_1821_ar')->get();
         $all_colonia_info = DB::table('colonia')->get();
         $all_listaReporte_info = DB::table('tlv_1821_lr')->get();
-        $this->all_consultaReporte_info = DB::select('SELECT * FROM reportes ORDER BY
-        fecha DESC;');
+        $this->all_consultaReporte_info = DB::select("SELECT * FROM reportes WHERE status = 'EP' ORDER BY
+        fecha DESC;");
         $this->downloadPDF($this->all_consultaReporte_info);
         return view('consultareporte')
             ->with('all_consultaReporte_info', $this->all_consultaReporte_info)
