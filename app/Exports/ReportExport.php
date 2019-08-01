@@ -7,40 +7,29 @@ use DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\FromView;
+use Illuminate\Contracts\View\View;
+use SAI\Http\Controllers\ConsultaReporte\ConsultaReporteController;
 
-class ReportExport implements FromCollection, WithHeadings , ShouldAutoSize
+class ReportExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function headings(): array
+    protected $var;
+
+    public function _construct($string)
     {
-        return ['folio',
-        'nombre',
-        'fecha',
-        'status',
-        'colonia',
-        'tipo de reporte',
-        'Telefono',
-        'correo',
-        'calle', 'localidad',
-        'descripcion',
-        'Fecha Solucion'];
+        $this->var = $string;
     }
-    public function collection()
+
+    public function view(): View
     {
-         $table_reportes = DB::table('reportes')
-         ->select('folio',
-         DB::raw("CONCAT(nombre, ' ', paterno, ' ',materno)"),
-         'fecha','status',
-         DB::raw('(select nombre from colonia where colonia.idcolonia = reportes.idcolonia)'),
-         DB::raw('(SELECT nombre from tlv_1821_lr where tlv_1821_lr.idlistaReportes = reportes.idlistaReportes)'),
-         'telefono',
-         'correo',
-         'calle', 'localidad',
-         'descripcion',
-         'fechaSolucion'
-         )->get();
-         return $table_reportes;
+        $all_area_info = DB::table('tlv_1821_ar')->get();
+        $all_colonia_info = DB::table('colonia')->get();
+        $all_listaReporte_info = DB::table('tlv_1821_lr')->get();
+        $all_consultaReporte_info_pdf = DB::select($this->var);
+        return view('Excel.excel_consulta')
+        ->with('all_consultaReporte_info_pdf', $all_consultaReporte_info_pdf)
+        ->with('all_area_info', $all_area_info)
+        ->with('all_listaReporte_info', $all_listaReporte_info)
+        ->with('all_colonia_info', $all_colonia_info);
     }
 }

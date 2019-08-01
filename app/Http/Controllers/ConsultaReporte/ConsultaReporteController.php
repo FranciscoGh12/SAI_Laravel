@@ -3,6 +3,7 @@
 namespace SAI\Http\Controllers\ConsultaReporte;
 
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use SAI\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use DB;
@@ -10,7 +11,7 @@ use SAI\ConsultaReportes;
 use Illuminate\Pagination\PaginationServiceProvider;
 use SAI\Exports\ReportExport;
 use TCPDF;
-use Excel;
+
 
 class ConsultaReporteController extends Controller
 {
@@ -23,6 +24,7 @@ class ConsultaReporteController extends Controller
     protected $search_tipoReporte;
     protected $search_fechaInicio;
     protected $search_fechaFin;
+    protected $string;
 
     public function setAll_consultaReporte_info($all_consultaReporte_info)
     {
@@ -34,7 +36,6 @@ class ConsultaReporteController extends Controller
     }
 
 
-
     public function index()
     {
         $all_area_info = DB::table('tlv_1821_ar')->get();
@@ -43,6 +44,8 @@ class ConsultaReporteController extends Controller
         $this->all_consultaReporte_info = DB::select("SELECT * FROM reportes WHERE status = 'EP' ORDER BY
         fecha DESC;");
         $this->downloadPDF($this->all_consultaReporte_info);
+        $this->string = "SELECT * FROM reportes WHERE status = 'EP' ORDER BY fecha DESC";
+
         return view('consultareporte')
             ->with('all_consultaReporte_info', $this->all_consultaReporte_info)
             ->with('all_area_info', $all_area_info)
@@ -105,11 +108,11 @@ class ConsultaReporteController extends Controller
         echo $output;
     }
 
-    public function export(Request $request)
+    public function export()
     {
-        //return Excel::download(new ReportExport, 'reportes.xlsx');
+        return Excel::download(new ReportExport($this->string), 'reportes.xlsx');
 
-       return Excel::create('Reportes', function($excel) {
+     /* Excel::create('Reportes', function($excel) {
 
             $excel->sheet('New sheet', function($sheet) {
 
@@ -117,7 +120,8 @@ class ConsultaReporteController extends Controller
 
             });
 
-        })->download('xlsx');
+        })->export('xls'); */
+
 
     }
 
