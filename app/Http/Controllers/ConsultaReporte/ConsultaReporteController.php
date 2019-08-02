@@ -44,7 +44,7 @@ class ConsultaReporteController extends Controller
         $this->all_consultaReporte_info = DB::select("SELECT * FROM reportes WHERE status = 'EP' ORDER BY
         fecha DESC;");
         $this->downloadPDF($this->all_consultaReporte_info);
-        $this->string = "SELECT * FROM reportes WHERE status = 'EP' ORDER BY fecha DESC";
+        $this->export();
 
         return view('consultareporte')
             ->with('all_consultaReporte_info', $this->all_consultaReporte_info)
@@ -72,6 +72,7 @@ class ConsultaReporteController extends Controller
             $this->all_consultaReporte_info = DB::select("SELECT * FROM reportes WHERE idlistaReportes IN (SELECT idlistaReportes FROM tlv_1821_lr WHERE idarea = '$this->search_areas')");
 
             $this->downloadPDF($this->all_consultaReporte_info);
+            $this->export();
         } else {
             $this->all_consultaReporte_info = ConsultaReportes::orderBy('fecha', 'desc')
                 ->nombre($this->search_nombre)
@@ -110,19 +111,12 @@ class ConsultaReporteController extends Controller
 
     public function export()
     {
-        return Excel::download(new ReportExport($this->string), 'reportes.xlsx');
+        return $this->exportExcel();
+    }
 
-     /* Excel::create('Reportes', function($excel) {
-
-            $excel->sheet('New sheet', function($sheet) {
-
-                $sheet->loadView('Excel.excel_consulta');
-
-            });
-
-        })->export('xls'); */
-
-
+    public function exportExcel()
+    {
+        return (new ReportExport)->download('reportes.xlsx');
     }
 
     public function vistaPDF()

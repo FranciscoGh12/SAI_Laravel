@@ -10,7 +10,6 @@
 </head>
 
 <body>
-    <main>
         <h2 align="center"><b>LISTADO DE REPORTES</b></h2>
         <table width="100%" border="0.2" cellspacing="1" cellpadding="1" class="table_pdf">
             <thead>
@@ -66,7 +65,6 @@
             </tbody>
         </table>
         <h4 align="right">TOTAL DE REPORTES: {{$contador}}</h4>
-    </main>
 </body>
 
 <style type="text/css">
