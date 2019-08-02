@@ -122,7 +122,7 @@
                         <label style="color:#7612b5" for="export-file">Exportar:<br> </label>
 
                         <form action={{url('consultaReporte/exportacion')}} method="post">
-                        <button class="boton-Personalizado" style='border:#ffffff; background-color:green;width:120px; height:40px' type="submit"></a><span class="mif-file-excel "></span> Exel</button>
+                        <button  name="export-excel" class="boton-Personalizado" style='border:#ffffff; background-color:green;width:120px; height:40px' type="submit"></a><span class="mif-file-excel "></span> Exel</button>
                         <br> <br>
                         {{ csrf_field() }}
                         </form>

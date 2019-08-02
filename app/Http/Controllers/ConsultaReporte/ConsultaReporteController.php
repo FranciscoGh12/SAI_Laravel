@@ -7,16 +7,19 @@ use Maatwebsite\Excel\Facades\Excel;
 use SAI\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use Maatwebsite\Excel\Concerns\FromView;
+use Illuminate\Contracts\View\View;
 use SAI\ConsultaReportes;
 use Illuminate\Pagination\PaginationServiceProvider;
 use SAI\Exports\ReportExport;
 use TCPDF;
-
+use SAI\Http\Controllers\ConsultadeReportes\ConsultadeReportesController;
 
 class ConsultaReporteController extends Controller
 {
     protected $all_consultaReporte_info;
     protected $view;
+    protected $search_nombre;
     protected $search_colonia;
     protected $search_status;
     protected $search_areas;
@@ -44,14 +47,12 @@ class ConsultaReporteController extends Controller
         $this->all_consultaReporte_info = DB::select("SELECT * FROM reportes WHERE status = 'EP' ORDER BY
         fecha DESC;");
         $this->downloadPDF($this->all_consultaReporte_info);
-        $this->export();
 
         return view('consultareporte')
             ->with('all_consultaReporte_info', $this->all_consultaReporte_info)
             ->with('all_area_info', $all_area_info)
             ->with('all_listaReporte_info', $all_listaReporte_info)
             ->with('all_colonia_info', $all_colonia_info);
-
     }
 
     public function filtrado_reporte(Request $request)
@@ -72,7 +73,6 @@ class ConsultaReporteController extends Controller
             $this->all_consultaReporte_info = DB::select("SELECT * FROM reportes WHERE idlistaReportes IN (SELECT idlistaReportes FROM tlv_1821_lr WHERE idarea = '$this->search_areas')");
 
             $this->downloadPDF($this->all_consultaReporte_info);
-            $this->export();
         } else {
             $this->all_consultaReporte_info = ConsultaReportes::orderBy('fecha', 'desc')
                 ->nombre($this->search_nombre)
@@ -109,26 +109,33 @@ class ConsultaReporteController extends Controller
         echo $output;
     }
 
+
     public function export()
     {
-        return $this->exportExcel();
+       /* $data  = DB::table('reportes')->get()->toArray();
+       //return (new ConsultaReporteController)->download('reportes.xlsx');
+       return Excel::store(new exportReport($data),'temp/reportes.xlsx'); */
+       return $this->storeExcel();
     }
 
-    public function exportExcel()
-    {
-        return (new ReportExport)->download('reportes.xlsx');
-    }
+    public function storeExcel()
+{
+    $data  = DB::table('reportes')->get()->toArray();
+    //return (new ConsultaReporteController)->download('reportes.xlsx');
+    return Excel::store(new exportReport($data),'temp/reportes.xlsx');
+}
+
+
 
     public function vistaPDF()
     {
-        $url = $_SERVER['DOCUMENT_ROOT'].'/temp/reporte.pdf';
+        $url = $_SERVER['DOCUMENT_ROOT'] . '/temp/reporte.pdf';
         if (file_exists($url)) {
             return response()->file($url)->deleteFileAfterSend();
-        } else{
+        } else {
             $this->index();
             return response()->file($url)->deleteFileAfterSend();
         }
-
     }
 
     public function downloadPDF($all_listaReporte_info)
@@ -157,7 +164,7 @@ class ConsultaReporteController extends Controller
         $pdf->writeHTML($html_content, true, false, true, false, '');
         $pdf->lastPage();
 
-        $pdf->Output($_SERVER['DOCUMENT_ROOT'].'/temp/reporte.pdf', 'F');
+        $pdf->Output($_SERVER['DOCUMENT_ROOT'] . '/temp/reporte.pdf', 'F');
     }
 }
 class MyPDF extends TCPDF
@@ -178,4 +185,39 @@ class MyPDF extends TCPDF
         $contenido = '<img src = "img/pdf_footer.jpg" width = "10000" height= "600">';
         $this->writeHTML($contenido, true, false, true, false, '');
     }
+}
+
+class exportReport extends ConsultaReporteController  implements FromView
+{
+
+
+    public function view(): View
+    {
+       $all_area_info = DB::table('tlv_1821_ar')->get();
+        $all_colonia_info = DB::table('colonia')->get();
+        $all_listaReporte_info = DB::table('tlv_1821_lr')->get();
+        $all_consultaReporte_info_pdf = DB::select("SELECT * FROM reportes WHERE status = 'EP' ORDER BY
+        fecha DESC;");
+        return view('Excel.excel_consulta')
+            ->with('all_consultaReporte_info_pdf', $all_consultaReporte_info_pdf)
+            ->with('all_area_info', $all_area_info)
+            ->with('all_listaReporte_info', $all_listaReporte_info)
+            ->with('all_colonia_info', $all_colonia_info);
+
+    }
+
+
+   /* private $data ;
+
+    public function __construct($data )
+    {
+        $this->data  = $data ;
+    }
+
+    public function view(): View
+    {
+        return view('Excel.excel_consulta', [
+            'data ' => $this->data
+        ]);
+    } */
 }
