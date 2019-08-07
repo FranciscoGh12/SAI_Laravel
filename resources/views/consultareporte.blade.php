@@ -108,7 +108,7 @@
                                             ?>
                                         </TD>
                                         <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150">{{$consultaReporte->status}}</TD>
-                                        <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150"> <a href="#"><span class="mif-eye mif-2x "></span></a> </TD>
+                                        <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150"> <a href="{{url('verMasReportes/'.$consultaReporte->idreportes)}}"><span class="mif-eye mif-2x "></span></a> </TD>
                                         <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150"> <a href="#"><span class="mif-file-text mif-2x "></span></a> </TD>
                                         <TD style="border-color:#666666; border-style:dashed; border-width:2px;" width="150"><a href=""><span class="mif-cross mif-2x "></span></a></TD>
                                     </tr>
