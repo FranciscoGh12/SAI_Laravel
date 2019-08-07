@@ -37,9 +37,11 @@ class ReportesController extends Controller
     {
         $url = $_SERVER['DOCUMENT_ROOT'].'/temp/verMasReportes.pdf';
         if (file_exists($url)) {
+
+            Redirect::back()->with('message','Operation Successful !');
             return response()->file($url)->deleteFileAfterSend();
         } else{
-            return Redirect::back()->with('message','Operation Successful !');
+            return redirect('consultareporte')->with('status', 'Profile updated!');
         }
 
     }

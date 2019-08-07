@@ -93,7 +93,7 @@
                             class="boton-Personalizado">Volver</a></button>
 
                         <form action="{{url('verMasReportes/PdfTabla')}}" target="_blank"  method="post">
-                                <button class="boton-Personalizado" style='border:#ffffff; background-color:red; width:120px; height:40px' type="submit"></a><span class="mif-file-pdf "></span> PDF</button>
+                        <button onclick="setTimeout(function(){window.location.href='{{URL::to('/consultareporte')}}'},100)" class="boton-Personalizado" style='border:#ffffff; background-color:red; width:120px; height:40px' type="submit"></a><span class="mif-file-pdf "></span> PDF</button>
                                 {{ csrf_field() }}
                                 <br> <br>
                         </form>
