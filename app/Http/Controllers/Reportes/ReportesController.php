@@ -7,6 +7,7 @@ use SAI\Http\Controllers\Controller;
 use DB;
 use TCPDF;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ReportesController extends Controller
 {
@@ -38,10 +39,11 @@ class ReportesController extends Controller
         $url = $_SERVER['DOCUMENT_ROOT'].'/temp/verMasReportes.pdf';
         if (file_exists($url)) {
 
-            Redirect::back()->with('message','Operation Successful !');
+            Alert::success('PDF GENERADO', 'PDF GENERADO Correctamente');
             return response()->file($url)->deleteFileAfterSend();
         } else{
-            return redirect('consultareporte')->with('status', 'Profile updated!');
+            Alert::error('PDF NO GENERADO', 'Error al generar el PDF');
+            return redirect('consultareporte');
         }
 
     }

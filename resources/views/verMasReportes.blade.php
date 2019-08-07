@@ -89,11 +89,11 @@
                         <label class="form-Nombres2"></label>
                     </div><br>
 
-                    <button> <a href="../view/consultaIndividualR.php" type="submit"
-                            class="boton-Personalizado">Volver</a></button>
+                    <button> <a href="{{URL::to('/consultareporte')}}" type="submit"
+                            class="boton-Personalizado">Volver</a></button> <br> <br>
 
                         <form action="{{url('verMasReportes/PdfTabla')}}" target="_blank"  method="post">
-                        <button onclick="setTimeout(function(){window.location.href='{{URL::to('/consultareporte')}}'},100)" class="boton-Personalizado" style='border:#ffffff; background-color:red; width:120px; height:40px' type="submit"></a><span class="mif-file-pdf "></span> PDF</button>
+                        <button onclick="setTimeout(function(){window.location.href='{{URL::to('/consultareporte')}}'},50)" class="boton-Personalizado" style='border:#ffffff; background-color:red; width:120px; height:40px' type="submit"></a><span class="mif-file-pdf "></span> PDF</button>
                                 {{ csrf_field() }}
                                 <br> <br>
                         </form>
